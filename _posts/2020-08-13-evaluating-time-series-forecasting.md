@@ -28,7 +28,7 @@ What are the options to do time series forecasting at scale (say millions of ser
 > We fit the Prophet model using Stan, and have implemented the core of the Prophet procedure in Stan’s probabilistic programming language. Stan performs the MAP optimization for parameters extremely quickly (<1 second), gives us the option to estimate parameter uncertainty using the `Hamiltonian Monte Carlo algorithm`. 
 
 #### Training.
-if mcmc_samples greater than 0, will do full Bayesian inference with the specified number of MCMC samples. If 0, will do MAP estimation. 
+if parameter [mcmc_samples](https://github.com/facebook/prophet/blob/cd8a24eddd6bebb9888f2e0ae2388f209047b02d/python/prophet/forecaster.py#L63) greater than 0, will do full Bayesian inference with the specified number of MCMC samples. If 0, will do MAP estimation. 
 
 #### Sampling
 In [sample_model](https://github.com/facebook/prophet/blob/cd8a24eddd6bebb9888f2e0ae2388f209047b02d/python/prophet/forecaster.py#L1455), to get yhat, 

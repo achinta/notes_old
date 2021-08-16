@@ -25,4 +25,10 @@ What are the options to do time series forecasting at scale (say millions of ser
 
 > By default, Prophet will provide uncertainty intervals for the trend component by simulating future trend changes to your time series. If you wish to model uncertainty about future seasonality or holiday effects, you can run a few hundred HMC iterations (which takes a few minutes) and your forecasts will include seasonal uncertainty estimates.
 
-> We fit the Prophet model using Stan, and have implemented the core of the Prophet procedure in Stan’s probabilistic programming language. Stan performs the MAP optimization for parameters extremely quickly (<1 second), gives us the option to estimate parameter uncertainty using the Hamiltonian Monte Carlo algorithm, 
+> We fit the Prophet model using Stan, and have implemented the core of the Prophet procedure in Stan’s probabilistic programming language. Stan performs the MAP optimization for parameters extremely quickly (<1 second), gives us the option to estimate parameter uncertainty using the Hamiltonian Monte Carlo algorithm. 
+
+#### Uncertainity and evaluating yhat and yhat_upper.
+In [sample_model](https://github.com/facebook/prophet/blob/cd8a24eddd6bebb9888f2e0ae2388f209047b02d/python/prophet/forecaster.py#L1455), to get yhat, 
+ - Trend is sampled using [sample_predictive_trend](https://github.com/facebook/prophet/blob/cd8a24eddd6bebb9888f2e0ae2388f209047b02d/python/prophet/forecaster.py#L1485)
+ - sesonality extrapolated
+ - noise is added

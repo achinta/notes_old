@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Title | fastpages</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Title" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="An easy to use blogging platform with support for Jupyter Notebooks." />
+<meta property="og:description" content="An easy to use blogging platform with support for Jupyter Notebooks." />
+<link rel="canonical" href="https://achinta.github.io/notes/2021/11/22/01-the-machine-learning-landscape.html" />
+<meta property="og:url" content="https://achinta.github.io/notes/2021/11/22/01-the-machine-learning-landscape.html" />
+<meta property="og:site_name" content="fastpages" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-11-22T00:00:00-06:00" />
+<script type="application/ld+json">
+{"datePublished":"2021-11-22T00:00:00-06:00","url":"https://achinta.github.io/notes/2021/11/22/01-the-machine-learning-landscape.html","@type":"BlogPosting","headline":"Title","dateModified":"2021-11-22T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://achinta.github.io/notes/2021/11/22/01-the-machine-learning-landscape.html"},"description":"An easy to use blogging platform with support for Jupyter Notebooks.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/notes/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://achinta.github.io/notes/feed.xml" title="fastpages" /><link rel="shortcut icon" type="image/x-icon" href="/notes/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/notes/">fastpages</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/notes/about/">About Me</a><a class="page-link" href="/notes/search/">Search</a><a class="page-link" href="/notes/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Title</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-11-22T00:00:00-06:00" itemprop="datePublished">
+        Nov 22, 2021
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      1 min read
+    
+</span></p>
+
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/achinta/notes/tree/master/_notebooks/2021-11-22-01-the-machine-learning-landscape.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/notes/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/achinta/notes/master?filepath=_notebooks%2F2021-11-22-01-the-machine-learning-landscape.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/notes/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/achinta/notes/blob/master/_notebooks/2021-11-22-01-the-machine-learning-landscape.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/notes/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2021-11-22-01-the-machine-learning-landscape.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sklearn</span>
+<span class="kn">import</span> <span class="nn">urllib.request</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="c1"># matplotlib</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;axes&#39;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">14</span><span class="p">),</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;xtick&#39;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;ytick&#39;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;sklearn_version - </span><span class="si">{</span><span class="n">sklearn</span><span class="o">.</span><span class="n">__version__</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>sklearn_version - 0.24.2
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">prepare_country_stats</span><span class="p">(</span><span class="n">oecd_bli</span><span class="p">,</span> <span class="n">gdp_per_capita</span><span class="p">):</span>
+    <span class="n">oecd_bli</span> <span class="o">=</span> <span class="n">oecd_bli</span><span class="p">[</span><span class="n">oecd_bli</span><span class="p">[</span><span class="s2">&quot;INEQUALITY&quot;</span><span class="p">]</span><span class="o">==</span><span class="s2">&quot;TOT&quot;</span><span class="p">]</span>
+    <span class="n">oecd_bli</span> <span class="o">=</span> <span class="n">oecd_bli</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s2">&quot;Country&quot;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s2">&quot;Indicator&quot;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s2">&quot;Value&quot;</span><span class="p">)</span>
+    <span class="n">gdp_per_capita</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;2015&quot;</span><span class="p">:</span> <span class="s2">&quot;GDP per capita&quot;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">gdp_per_capita</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;Country&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">full_country_stats</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="n">oecd_bli</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="n">gdp_per_capita</span><span class="p">,</span>
+                                  <span class="n">left_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">right_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">full_country_stats</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;GDP per capita&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">remove_indices</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">35</span><span class="p">]</span>
+    <span class="n">keep_indices</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">36</span><span class="p">))</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">remove_indices</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">full_country_stats</span><span class="p">[[</span><span class="s2">&quot;GDP per capita&quot;</span><span class="p">,</span> <span class="s1">&#39;Life satisfaction&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">keep_indices</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>curl https://raw.githubusercontent.com/ageron/handson-ml2/master/oecd_bli_2015.csv
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404: Not Found</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">DOWNLOAD_ROOT</span> <span class="o">=</span>  <span class="s2">&quot;https://raw.githubusercontent.com/ageron/handson-ml2/master/&quot;</span>
+<span class="n">datapath</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;datasets/lifesat&#39;</span><span class="p">)</span>
+<span class="n">datapath</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">parents</span><span class="o">=</span><span class="kc">True</span> <span class="p">)</span>
+
+<span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;oecd_bli_2015.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;gdp_per_capita.csv&quot;</span><span class="p">):</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">DOWNLOAD_ROOT</span><span class="p">,</span> <span class="s1">&#39;datasets/lifesat&#39;</span><span class="p">,</span><span class="n">filename</span><span class="p">])</span>
+    <span class="n">filepath</span> <span class="o">=</span> <span class="p">(</span><span class="n">datapath</span><span class="o">/</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;downloading from </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filepath</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>downloading from https://raw.githubusercontent.com/ageron/handson-ml2/master//datasets/lifesat/oecd_bli_2015.csv to /home/achinta/machine-learning/books/handson-ml2/datasets/lifesat/oecd_bli_2015.csv
+downloading from https://raw.githubusercontent.com/ageron/handson-ml2/master//datasets/lifesat/gdp_per_capita.csv to /home/achinta/machine-learning/books/handson-ml2/datasets/lifesat/gdp_per_capita.csv
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Plot-the-data">Plot the data<a class="anchor-link" href="#Plot-the-data"> </a></h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">oecd_bli</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">datapath</span><span class="o">/</span><span class="s1">&#39;oecd_bli_2015.csv&#39;</span><span class="p">,</span> <span class="n">thousands</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+<span class="n">gdp_per_capita</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">datapath</span><span class="o">/</span><span class="s1">&#39;gdp_per_capita.csv&#39;</span><span class="p">,</span> <span class="n">thousands</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;latin1&#39;</span><span class="p">,</span> <span class="n">na_values</span><span class="o">=</span><span class="s1">&#39;n/a&#39;</span><span class="p">)</span>
+<span class="n">country_stats</span> <span class="o">=</span> <span class="n">prepare_country_stats</span><span class="p">(</span><span class="n">oecd_bli</span><span class="p">,</span> <span class="n">gdp_per_capita</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;country stats.shape - </span><span class="si">{</span><span class="n">country_stats</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># show the data in a plot</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">country_stats</span><span class="p">[</span><span class="s1">&#39;GDP per capita&#39;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">country_stats</span><span class="p">[</span><span class="s1">&#39;Life satisfaction&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+
+<span class="c1"># lets annotate a few examples</span>
+<span class="n">idxs</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">country_stats</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">idxs</span><span class="p">:</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="n">country_stats</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;GDP per capita&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Life satisfaction&#39;</span><span class="p">]),</span> 
+                 <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">headwidth</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
+                <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;GDP per capita&#39;</span><span class="p">],</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Life satisfaction&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>country stats.shape - (29, 2)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+" />
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="model">model<a class="anchor-link" href="#model"> </a></h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">sklearn.linear_model</span>
+
+<span class="n">x</span><span class="o">=</span><span class="n">country_stats</span><span class="p">[</span><span class="s1">&#39;GDP per capita&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">y</span><span class="o">=</span><span class="n">country_stats</span><span class="p">[</span><span class="s1">&#39;Life satisfaction&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+                                                   
+<span class="n">model</span> <span class="o">=</span> <span class="n">sklearn</span><span class="o">.</span><span class="n">linear_model</span><span class="o">.</span><span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>LinearRegression()</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X_new</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">22587</span><span class="p">]]</span>  <span class="c1"># Cyprus&#39; GDP per capita</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_new</span><span class="p">))</span> <span class="c1"># outputs [[ 5.96242338]]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[5.96242338]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+</div>
+
+
+
+  </div><a class="u-url" href="/notes/2021/11/22/01-the-machine-learning-landscape.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/notes/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/notes/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/notes/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>An easy to use blogging platform with support for Jupyter Notebooks.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/fastai" title="fastai"><svg class="svg-icon grey"><use xlink:href="/notes/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/fastdotai" title="fastdotai"><svg class="svg-icon grey"><use xlink:href="/notes/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

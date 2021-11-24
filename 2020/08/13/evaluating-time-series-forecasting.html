@@ -1,0 +1,50 @@
+<h2 id="purpose">Purpose</h2>
+<p>What are the options to do time series forecasting at scale (say millions of series), where we output yhat, yhat_upper and yhat_lower?</p>
+
+<ul>
+  <li>Facebook Prophet</li>
+  <li><a href="https://neuralprophet.com">Neural Prophet</a></li>
+  <li><a href="https://arxiv.org/abs/2002.06103">Multivariate Probabilistic Time Series Forecasting via Conditioned Normalizing Flows</a></li>
+  <li><a href="https://pytorch-forecasting.readthedocs.io/en/latest/">Pytorch Forecasting</a></li>
+  <li><a href="https://github.com/AIStream-Peelout/flow-forecast">flow-forecast</a></li>
+</ul>
+
+<h3 id="facebook-prophet">Facebook Prophet</h3>
+<h5 id="where-facebook-shines"><a href="https://research.fb.com/blog/2017/02/prophet-forecasting-at-scale/">Where Facebook Shines</a></h5>
+<ul>
+  <li>hourly, daily, or weekly observations with at least a few months (preferably a year) of history</li>
+  <li>strong multiple “human-scale” seasonalities: day of week and time of year</li>
+  <li>important holidays that occur at irregular intervals that are known in advance (e.g. the Super Bowl)</li>
+  <li>a reasonable number of missing observations or large outliers</li>
+  <li>historical trend changes, for instance due to product launches or logging changes</li>
+  <li>trends that are non-linear growth curves, where a trend hits a natural limit or saturates
+    <h4 id="how-prophet-works">How Prophet Works</h4>
+  </li>
+  <li>A <code class="language-plaintext highlighter-rouge">piecewise linear</code> or <code class="language-plaintext highlighter-rouge">logistic growth</code> curve trend. Prophet automatically detects changes in trends by selecting <code class="language-plaintext highlighter-rouge">changepoints</code> from the data.</li>
+  <li>A yearly seasonal component modeled using Fourier series.</li>
+  <li>A weekly seasonal component using dummy variables.</li>
+  <li>A user-provided list of important holidays.</li>
+</ul>
+
+<blockquote>
+  <p>The important idea in Prophet is that by doing a better job of fitting the trend component very flexibly, we more accurately model seasonality and the result is a more accurate forecast.</p>
+</blockquote>
+
+<blockquote>
+  <p>By default, Prophet will provide uncertainty intervals for the trend component by simulating future trend changes to your time series. If you wish to model uncertainty about future seasonality or holiday effects, you can run a few hundred HMC iterations (which takes a few minutes) and your forecasts will include seasonal uncertainty estimates.</p>
+</blockquote>
+
+<blockquote>
+  <p>We fit the Prophet model using Stan, and have implemented the core of the Prophet procedure in Stan’s probabilistic programming language. Stan performs the MAP optimization for parameters extremely quickly (&lt;1 second), gives us the option to estimate parameter uncertainty using the <code class="language-plaintext highlighter-rouge">Hamiltonian Monte Carlo algorithm</code>.</p>
+</blockquote>
+
+<h4 id="training">Training.</h4>
+<p>if parameter <a href="https://github.com/facebook/prophet/blob/cd8a24eddd6bebb9888f2e0ae2388f209047b02d/python/prophet/forecaster.py#L63">mcmc_samples</a> greater than 0, will do full Bayesian inference with the specified number of MCMC samples. If 0, will do MAP estimation.</p>
+
+<h4 id="sampling">Sampling</h4>
+<p>In <a href="https://github.com/facebook/prophet/blob/cd8a24eddd6bebb9888f2e0ae2388f209047b02d/python/prophet/forecaster.py#L1455">sample_model</a>, to get yhat,</p>
+<ul>
+  <li>Trend is sampled using <a href="https://github.com/facebook/prophet/blob/cd8a24eddd6bebb9888f2e0ae2388f209047b02d/python/prophet/forecaster.py#L1485">sample_predictive_trend</a></li>
+  <li>sesonality extrapolated</li>
+  <li>noise is added</li>
+</ul>

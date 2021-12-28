@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Variational Inference | fastpages</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Variational Inference" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Under the hood" />
+<meta property="og:description" content="Under the hood" />
+<link rel="canonical" href="https://achinta.github.io/notes/2021/12/28/variational-inference.html" />
+<meta property="og:url" content="https://achinta.github.io/notes/2021/12/28/variational-inference.html" />
+<meta property="og:site_name" content="fastpages" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-12-28T00:00:00-06:00" />
+<script type="application/ld+json">
+{"url":"https://achinta.github.io/notes/2021/12/28/variational-inference.html","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://achinta.github.io/notes/2021/12/28/variational-inference.html"},"headline":"Variational Inference","dateModified":"2021-12-28T00:00:00-06:00","datePublished":"2021-12-28T00:00:00-06:00","description":"Under the hood","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/notes/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://achinta.github.io/notes/feed.xml" title="fastpages" /><link rel="shortcut icon" type="image/x-icon" href="/notes/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/notes/">fastpages</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/notes/about/">About Me</a><a class="page-link" href="/notes/search/">Search</a><a class="page-link" href="/notes/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Variational Inference</h1><p class="page-description">Under the hood</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-12-28T00:00:00-06:00" itemprop="datePublished">
+        Dec 28, 2021
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      3 min read
+    
+</span></p>
+
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/achinta/notes/tree/master/_notebooks/2021-12-28-variational-inference.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/notes/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/achinta/notes/master?filepath=_notebooks%2F2021-12-28-variational-inference.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/notes/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/achinta/notes/blob/master/_notebooks/2021-12-28-variational-inference.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/notes/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2021-12-28-variational-inference.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Purpose">Purpose<a class="anchor-link" href="#Purpose"> </a></h3><p>Following the blog post <a href="https://willcrichton.net/notes/probabilistic-programming-under-the-hood/">https://willcrichton.net/notes/probabilistic-programming-under-the-hood/</a></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pyro.distributions</span> <span class="k">as</span> <span class="nn">dist</span>
+<span class="kn">from</span> <span class="nn">pyro</span> <span class="kn">import</span> <span class="n">sample</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">coinflip</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="s2">&quot;coinflip&quot;</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">Bernoulli</span><span class="p">(</span><span class="n">probs</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;coinflip - </span><span class="si">{</span><span class="n">coinflip</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Noisy sample</span>
+<span class="n">noisy_sample</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="s2">&quot;noisy_sample&quot;</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Noisy Sample - </span><span class="si">{</span><span class="n">noisy_sample</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>coinflip - 1.0
+Noisy Sample - -0.21278521418571472
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">sleep_model</span><span class="p">():</span>
+    <span class="c1"># very likely to feel lazy</span>
+    <span class="n">feeling_lazy</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="s1">&#39;feeling_lazy&#39;</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">Bernoulli</span><span class="p">(</span><span class="mf">0.9</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">feeling_lazy</span><span class="p">:</span>
+        <span class="c1"># only going to possibly ignore alarm if I am feeling lazy</span>
+        <span class="n">ignore_alarm</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="s1">&#39;ignore_alarm&#39;</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">Bernoulli</span><span class="p">(</span><span class="mf">0.8</span><span class="p">))</span>
+        <span class="c1"># will sleep more if Ignore alarm</span>
+        <span class="n">amount_slept</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;amount_slept&#39;</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="mi">8</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">ignore_alarm</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">amount_slept</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="s1">&#39;amount_slept&#39;</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">amount_slept</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">sleep_model</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sleep_model</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sleep_model</span><span class="p">())</span>
+                              
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>tensor(9.6567)
+tensor(8.2041)
+tensor(11.7966)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Traces-and-conditioning">Traces and conditioning<a class="anchor-link" href="#Traces-and-conditioning"> </a></h3><p>On the unconditional sleep model, we could ask a few questions, like:</p>
+<ul>
+<li>Joint probability of a sample: what is the probability that <code>feeling_lazy</code> = 1, <code>ignore_alarm</code> = 0, amount_slept = 10?</li>
+<li>Joint probability distribution: what is the probability for any possible assignment to all variables?</li>
+<li>Marginal probability of a sample: what is the probability that <code>feeling_lazy</code> is true?</li>
+<li>Marginal probability distribution: what is the probability over all values of <code>amount_slept</code>?</li>
+</ul>
+<p>First, we need the ability to evaluate the probability of a joint assignment to each variable.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pyro.poutine</span> <span class="kn">import</span> <span class="n">trace</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tr</span> <span class="o">=</span> <span class="n">trace</span><span class="p">(</span><span class="n">sleep_model</span><span class="p">)</span><span class="o">.</span><span class="n">get_trace</span><span class="p">()</span>
+<span class="n">pprint</span><span class="p">({</span>
+    <span class="n">name</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="n">props</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;prob&#39;</span><span class="p">:</span> <span class="n">props</span><span class="p">[</span><span class="s1">&#39;fn&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">log_prob</span><span class="p">(</span><span class="n">props</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">exp</span><span class="p">()</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">props</span><span class="p">)</span> <span class="ow">in</span> <span class="n">tr</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">props</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;sample&#39;</span>
+<span class="p">})</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{&#39;alarm_slept&#39;: {&#39;prob&#39;: tensor(0.3937), &#39;value&#39;: tensor(7.8368)},
+ &#39;feeling_lazy&#39;: {&#39;prob&#39;: tensor(0.9000), &#39;value&#39;: tensor(1.)},
+ &#39;ignore_alarm&#39;: {&#39;prob&#39;: tensor(0.2000), &#39;value&#39;: tensor(0.)}}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="conditional-probabilities">conditional probabilities<a class="anchor-link" href="#conditional-probabilities"> </a></h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pyro</span> <span class="kn">import</span> <span class="n">condition</span>
+
+<span class="n">cond_model</span> <span class="o">=</span> <span class="n">condition</span><span class="p">(</span><span class="n">sleep_model</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s1">&#39;feeling_lazy&#39;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span>
+    <span class="s1">&#39;ignore_alarm&#39;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mf">0.0</span><span class="p">),</span>
+    <span class="s1">&#39;amount_slept&#39;</span><span class="p">:</span> <span class="mf">10.0</span>
+<span class="p">})</span>
+
+<span class="n">trace</span><span class="p">(</span><span class="n">cond_model</span><span class="p">)</span><span class="o">.</span><span class="n">get_trace</span><span class="p">()</span><span class="o">.</span><span class="n">log_prob_sum</span><span class="p">()</span><span class="o">.</span><span class="n">exp</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor(0.0303)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now we can produce an approximate answer to any of our questions by sampling from distribution enough times. For example, we can look at the marginal distribution over each variable</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">traces</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
+    <span class="n">tr</span> <span class="o">=</span> <span class="n">trace</span><span class="p">(</span><span class="n">sleep_model</span><span class="p">)</span><span class="o">.</span><span class="n">get_trace</span><span class="p">()</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">name</span><span class="p">:</span> <span class="n">props</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">props</span><span class="p">)</span> <span class="ow">in</span> <span class="n">tr</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">props</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;sample&#39;</span>
+    <span class="p">}</span>
+    <span class="n">traces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">traces</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">hist</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([[&lt;AxesSubplot:title={&#39;center&#39;:&#39;feeling_lazy&#39;}&gt;,
+        &lt;AxesSubplot:title={&#39;center&#39;:&#39;ignore_alarm&#39;}&gt;],
+       [&lt;AxesSubplot:title={&#39;center&#39;:&#39;amount_slept&#39;}&gt;, &lt;AxesSubplot:&gt;]],
+      dtype=object)</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+" />
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>feeling_lazy</th>
+      <th>ignore_alarm</th>
+      <th>amount_slept</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>10.285290</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>11.648011</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Sampling-conditional-distributions">Sampling conditional distributions<a class="anchor-link" href="#Sampling-conditional-distributions"> </a></h3><ul>
+<li>Given I slept 6 hours, what is the probability I was feeling lazy?</li>
+<li><p>What is the probability of me sleeping exactly 7.65 hours</p>
+<p>What is the problem with this?
+First, as the number of marginalized variables grows, we have an exponential increase in summation terms.</p>
+</li>
+</ul>
+<p>But the second issue is that for continuous variables, computing this marginal probability can quickly become intractable. For example, if <code>feeling_lazy</code> was a real-valued laziness score between 0 and 1 (presumably a more realistic model), then marginalizing that variable requires an integral instead of a sum. In general, producing an exact estimate of a conditional probability for a complex probabilistic program is not computationally feasible.</p>
+<h2 id="Approximate-Inference">Approximate Inference<a class="anchor-link" href="#Approximate-Inference"> </a></h2><p>The main idea is that instead of exactly computing the conditional probability distribution (or “posterior”) of interest, we can approximate it using a variety of techniques. Generally, these fall into two camps: sampling methods and variational methods. The CS 228 (Probabilistic Graphical Models at Stanford) course notes go in depth on both (<a href="https://ermongroup.github.io/cs228-notes/inference/sampling/">sampling</a>, <a href="https://ermongroup.github.io/cs228-notes/inference/variational/">Variational</a>)</p>
+<p>Essentially, for sampling methods, you use algorithms that continually draw samples from a changing probability distribution until eventually they converge on the true posterior of interest. The time to convergence is not known ahead of time. For variational methods, you use a simpler function that can be optimized to match the true posterior using standard optimization techniques like gradient descent.</p>
+<p>Where to use what? Please have a look at the original blog post.</p>
+<h3 id="Variational-inference-1:-autodifferentiation">Variational inference 1: autodifferentiation<a class="anchor-link" href="#Variational-inference-1:-autodifferentiation"> </a></h3>
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><a class="u-url" href="/notes/2021/12/28/variational-inference.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/notes/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/notes/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/notes/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>An easy to use blogging platform with support for Jupyter Notebooks.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/fastai" title="fastai"><svg class="svg-icon grey"><use xlink:href="/notes/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/fastdotai" title="fastdotai"><svg class="svg-icon grey"><use xlink:href="/notes/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

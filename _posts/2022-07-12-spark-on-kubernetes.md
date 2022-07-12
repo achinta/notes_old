@@ -9,6 +9,9 @@ title: Spark on Kubernetes on M1 Mac
 To get started with spark on kubernetes, I had to make a few changes to steps in the excellent blog 
 https://dzlab.github.io/ml/2020/07/14/spark-kubernetes/, mostly due to version changes. 
 
+## Resources
+https://dev.to/stack-labs/my-journey-with-spark-on-kubernetes-in-python-1-3-4nl3
+
 ## Steps
 Assuming minikube and kubectl are installed, here are the steps followed:
 
@@ -86,4 +89,38 @@ Output is:
   Normal  SparkDriverCompleted       8s                   spark-operator  Driver spark-pi-driver completed
   Normal  SparkApplicationCompleted  8s                   spark-operator  SparkApplication spark-pi completed
 ```
+
+### submit job with spark-submit
+This worked for a scala job. 
+
+```shell
+spark-submit \
+--master k8s://https://127.0.0.1:50559 \
+--deploy-mode cluster \
+--name spark-pi \
+--class org.apache.spark.examples.SparkPi \
+--conf spark.executor.instances=1 \
+--conf spark.kubernetes.container.image=gcr.io/spark-operator/spark:v3.1.1 \
+--conf spark.kubernetes.namespace=spark-apps \
+--conf spark.kubernetes.authenticate.driver.serviceAccountName=spark \
+local:///opt/spark/examples/jars/spark-examples_2.12-3.1.1.jar
+```
+
+For pyspark, I had to change 
+    - the image to `gcr.io/spark-operator/spark:v3.1.1-py3.6`
+    - file to `local:///opt/spark/examples/src/main/python/pi.py`
+
+```shell
+spark-submit \
+--master k8s://https://127.0.0.1:50559 \
+--deploy-mode cluster \
+--name spark-pi \
+--class org.apache.spark.examples.SparkPi \
+--conf spark.executor.instances=1 \
+--conf spark.kubernetes.container.image=gcr.io/spark-operator/spark-py:v3.1.1 \
+--conf spark.kubernetes.namespace=spark-apps \
+--conf spark.kubernetes.authenticate.driver.serviceAccountName=spark \
+local:///opt/spark/examples/src/main/python/pi.py
+```
+
 

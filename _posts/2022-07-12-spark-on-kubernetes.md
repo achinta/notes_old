@@ -21,7 +21,8 @@ minikube start --memory 8192 --cpus 6
 # add the help repo for spark operator
 helm repo add spark-operator https://googlecloudplatform.github.io/spark-on-k8s-operator
 
-# create namespace, serice account and ClusterRoleBinding from https://gist.githubusercontent.com/dzlab/b546a450a9e8cfa5c8c3ff0a7c9ff091/raw/a7487fe13f96c0a5ad576aad8548c342e9781994/spark-operator.yaml
+# create namespace, serice account and ClusterRoleBinding from 
+wget https://gist.githubusercontent.com/dzlab/b546a450a9e8cfa5c8c3ff0a7c9ff091/raw/a7487fe13f96c0a5ad576aad8548c342e9781994/spark-operator.yaml
 kubectl create -f spark-operator.yaml
 helm install sparkoperator spark-operator/spark-operator --namespace spark-operator --set sparkJobNamespace=spark-apps,enableWebhook=true
 

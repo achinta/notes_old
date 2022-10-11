@@ -108,8 +108,8 @@ local:///opt/spark/examples/jars/spark-examples_2.12-3.1.1.jar
 ```
 
 For pyspark, I had to change 
-    - the image to `gcr.io/spark-operator/spark:v3.1.1-py3.6`
-    - file to `local:///opt/spark/examples/src/main/python/pi.py`
+  - the image to `gcr.io/spark-operator/spark:v3.1.1-py3.6`
+  - file to `local:///opt/spark/examples/src/main/python/pi.py`
 
 ```shell
 spark-submit \

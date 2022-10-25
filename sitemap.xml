@@ -53,8 +53,16 @@
 <lastmod>2022-03-07T00:00:00-06:00</lastmod>
 </url>
 <url>
-<loc>https://achinta.github.io/notes/algorithms/2022/03/21/algos.html</loc>
-<lastmod>2022-03-21T00:00:00-05:00</lastmod>
+<loc>https://achinta.github.io/notes/markdown/2022/07/12/spark-on-kubernetes.html</loc>
+<lastmod>2022-07-12T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>https://achinta.github.io/notes/algorithms/2022/10/24/algos.html</loc>
+<lastmod>2022-10-24T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>https://achinta.github.io/notes/fastpages/jupyter/2022/10/25/transformers-from-scratch.html</loc>
+<lastmod>2022-10-25T00:00:00-05:00</lastmod>
 </url>
 <url>
 <loc>https://achinta.github.io/notes/about/</loc>
@@ -67,5 +75,8 @@
 </url>
 <url>
 <loc>https://achinta.github.io/notes/categories/</loc>
+</url>
+<url>
+<loc>https://achinta.github.io/notes/page2/</loc>
 </url>
 </urlset>

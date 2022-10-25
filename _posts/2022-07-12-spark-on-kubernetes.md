@@ -1,7 +1,7 @@
 ---
 toc: true
 layout: post
-description: Running spark on kubernetes: Getting started
+description: Running spark on kubernetes - Getting started
 categories: [markdown]
 title: Spark on Kubernetes on M1 Mac
 ---
@@ -18,10 +18,10 @@ Assuming minikube and kubectl are installed, here are the steps followed:
 ```shell
 minikube start --memory 8192 --cpus 6
 
-# add the help repo for spark operator
+# add the help repo for spark operator (from https://github.com/GoogleCloudPlatform/spark-on-k8s-operator/blob/master/docs/quick-start-guide.md)
 helm repo add spark-operator https://googlecloudplatform.github.io/spark-on-k8s-operator
 
-# create namespace, serice account and ClusterRoleBinding from 
+# create namespace, serice account and ClusterRoleBinding (from https://dzlab.github.io/ml/2020/07/14/spark-kubernetes/ )
 wget https://gist.githubusercontent.com/dzlab/b546a450a9e8cfa5c8c3ff0a7c9ff091/raw/a7487fe13f96c0a5ad576aad8548c342e9781994/spark-operator.yaml
 kubectl create -f spark-operator.yaml
 helm install sparkoperator spark-operator/spark-operator --namespace spark-operator --set sparkJobNamespace=spark-apps,enableWebhook=true
